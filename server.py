@@ -7,7 +7,6 @@ from scripts.question_to_link import qtl_main
 from scripts.links_agregator import la_main
 
 
-
 app = Flask(__name__, static_url_path='')
 
 
@@ -23,8 +22,8 @@ def process():
     if request.method == 'POST':
         file = request.files['file']
         data = searcher(file)
-
     return data
+
 
 def searcher(f):
     pil_image = Image.open(f).convert('RGB')

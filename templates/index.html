@@ -12,6 +12,7 @@
     </form>
     <div class="cd"></div>
     <div class="fg"></div>
+    <div class="cards"></div>
 </body>
 <style>
     .cd {
@@ -20,6 +21,25 @@
     .fg {
         margin-top: 30px;
     }
+    .card {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .cards {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 </style>
 <script>
     $(document).ready ( function () {

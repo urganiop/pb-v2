@@ -27,12 +27,14 @@ def cropped_image(image, boxes):
         blank_image[y:y1, x:x1] = cropped
     return blank_image
 
+
 def read_text(image):
     pil_im = Image.fromarray(image)
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
     text = pytesseract.image_to_string(pil_im, lang="rus")
     print(text)
     return text
+
 
 def ip_main(image):
     # img = cv2.imread(image)

@@ -77,16 +77,18 @@ def la_main(valid_links_list):
             if re.findall('easyfizika', link) or re.findall('znanija', link) or re.findall('uchifiziku', link) or re.findall(r'otvet.mail', link):
                 which_link = link_determin(link)
                 webpage = get_page(link)
-
-                if which_link == 'ezfz':
-                    code = ez_fz_text_from_html(webpage)
-                elif which_link == 'znanija':
-                    code = znj_text_from_html(webpage)
-                elif which_link == 'uchifiziku':
-                    code = uf_text_from_html(webpage)
-                elif which_link == 'otvet':
-                    code = omr_text_from_html(webpage)
-                else:
+                try:
+                    if which_link == 'ezfz':
+                        code = ez_fz_text_from_html(webpage)
+                    elif which_link == 'znanija':
+                        code = znj_text_from_html(webpage)
+                    elif which_link == 'uchifiziku':
+                        code = uf_text_from_html(webpage)
+                    elif which_link == 'otvet':
+                        code = omr_text_from_html(webpage)
+                    else:
+                        code = None
+                except:
                     code = None
 
                 if code:

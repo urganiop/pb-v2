@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.1.0/anime.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="item logo"><div>PB</div></div>
+        <div class="item changeable start-button"><div id='start' class="start-button-frame"><div>Начать</div></div></div>
+        <div class="item renew-holder"></div>
+        <div class="item"></div>
+        <input type="file" id="file" accept="image/*" />
+    </div>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
+    
+    html, body {
+        margin: 0;
+        height: 100%;
+    }
+    
+    input {
+        display: none;
+    }
+    
+    a,
+    a:link,
+    a:visited {
+        text-decoration: none;
+        color: #000000;
+    }
+    
+    .container {
+        background: linear-gradient(180deg, #BFC0C0 0%, #ABAFBC 100%);
+        height: 100%;
+        
+        display: grid;
+        grid-template-columns: 300px auto auto auto auto auto;
+        grid-template-rows: 300px auto auto auto;
+        font-family: 'Exo 2', sans-serif;
+    }
+    
+    .item {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .logo {
+        font-size: 64px;
+        font-weight: bold;
+        
+        grid-column: 1/2;
+        grid-row: 1/2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .start-button {
+        font-weight: bold;
+        font-size: 48px;
+        
+        grid-column: 3/5;
+        grid-row: 2/4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .start-button-frame {
+        width: 338px;
+        height: 162px;
+        border: 3px solid black;
+        border-radius: 10px;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .sandWatch {
+        width: 50px;
+        height: 150px;
+        border: 1px solid black;
+    }
+    
+    .result-answer {
+        grid-column: 3/5;
+        grid-row: 2/3;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 24px;
+    }
+    
+    .question-field {
+        height: 300px;
+        width: 450px;
+    }
+    
+    .answer-field {
+        height: 300px;
+        width: 450px;
+    }
+    
+    .renew-holder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-column: 3/5;
+        grid-row: 3/4;
+    }
+    
+    .renew {
+        width: 150px;
+        height: 60px;
+        border: 3px solid black;
+        border-radius: 10px;
+        font-size 18px;
+        font-weight: bold;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+</style>
+<script>
+    let startHTML = '<div id="start" class="start-button-frame"><div>Начать</div></div>';
+    let photoInputHTML = '<div><label for="file">Выбрать фото</label></div>';
+    let sendHTML = '<div>Отправить</div>';
+    let pendingHTML = '<div class="sandWatch"></div>';
+    let qaHTML = '<div class="question-field"></div><div class="answer-field"></div>';
+    let renewHTML = '<div class="renew"><div>Заново</div></div>';
+    
+    let flipButton = document.querySelector('.start-button-frame');
+    let centerGrid = document.querySelector('.start-button');
+    let centerChangable = document.querySelector('.changeable');
+    let renewButton = document.querySelector('.renew-holder')
+    
+    let flip = anime({
+            targets: '.start-button-frame',
+            rotateX: [{ value: "360deg", duration: 4000 }],
+            autoplay: false
+        });
+    
+    function pendingAnimation(elem) {
+        let anim = anime({
+            targets: elem,
+            rotate: '180',
+            loop: true,
+            autoplay: false
+        });
+        anim.play();
+    }
+    
+    function changeText() {
+        if (flipButton.id == 'start') {
+            flipButton.innerHTML = photoInputHTML;
+            flipButton.id = 'choose';
+        } else if (flipButton.id == 'choose'){
+            flipButton.innerHTML = sendHTML;
+            flipButton.id = 'send';
+        }
+    }
+    
+    function sendAJAX() {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file',files);
+        $.ajax({
+            url: '/1',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                 $('.start-button').html(qaHTML);
+                 $('.question-field').html(data['question']);
+                 $('.answer-field').html(data['text']);
+                 $('.changeable').removeClass('start-button');
+                 $('.changeable').addClass('result-answer');
+                 $('.renew-holder').html(renewHTML);
+            },
+        });
+    }
+    
+    $(document).on('click', '.start-button-frame', function() {
+        if (this.id == 'send') {
+            centerGrid.innerHTML = pendingHTML;
+            let el = document.querySelector('.sandWatch');
+            pendingAnimation(el);
+            sendAJAX();
+            $(document).on('click', '.renew',function() {
+                window.location.reload();
+            });
+            
+        } else {
+            flip.play();
+            setTimeout(changeText, 300);
+        }
+    });
+</script>
+</html>

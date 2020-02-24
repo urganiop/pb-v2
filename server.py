@@ -1,13 +1,17 @@
-import json
 import numpy as np
 from PIL import Image
 from flask import Flask, render_template, request
 from scripts.main import ip_main
 from scripts.question_to_link import qtl_main
 from scripts.links_agregator import la_main
-
+import logging
 
 app = Flask(__name__, static_url_path='')
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 
 @app.route('/', methods=['GET', 'POST'])

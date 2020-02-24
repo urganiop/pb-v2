@@ -1,3 +1,4 @@
+import sys
 import cv2
 import numpy as np
 from PIL import Image
@@ -22,7 +23,6 @@ def cropped_image(image, boxes):
     for (x, y, x1, y1) in boxes:
         cropped = image[y:y1, x:x1]
         gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
-        # cropped = cv2.
         cropped = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 11)
         blank_image[y:y1, x:x1] = cropped
     return blank_image
@@ -30,7 +30,10 @@ def cropped_image(image, boxes):
 
 def read_text(image):
     pil_im = Image.fromarray(image)
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    if sys.platform == 'linux':
+        pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
+    else:
+        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
     text = pytesseract.image_to_string(pil_im, lang="rus")
     print(text)
     return text

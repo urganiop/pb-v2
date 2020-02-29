@@ -140,7 +140,8 @@
     let flipButton = document.querySelector('.start-button-frame');
     let centerGrid = document.querySelector('.start-button');
     let centerChangable = document.querySelector('.changeable');
-    let renewButton = document.querySelector('.renew-holder')
+    let renewButton = document.querySelector('.renew-holder');
+    
     
     let flip = anime({
             targets: '.start-button-frame',
@@ -163,8 +164,10 @@
             flipButton.innerHTML = photoInputHTML;
             flipButton.id = 'choose';
         } else if (flipButton.id == 'choose'){
+//            if (document.getElementById('file').files.length != 0) {
             flipButton.innerHTML = sendHTML;
             flipButton.id = 'send';
+//                }
         }
     }
     
@@ -191,14 +194,18 @@
     
     $(document).on('click', '.start-button-frame', function() {
         if (this.id == 'send') {
-            centerGrid.innerHTML = pendingHTML;
-            let el = document.querySelector('.sandWatch');
-            pendingAnimation(el);
-            sendAJAX();
-            $(document).on('click', '.renew',function() {
-                window.location.reload();
-            });
-            
+            if (document.getElementById('file').files.length == 0) {
+                flipButton.innerHTML = photoInputHTML; 
+                flipButton.id = 'choose';
+            } else {
+                centerGrid.innerHTML = pendingHTML;
+                let el = document.querySelector('.sandWatch');
+                pendingAnimation(el);
+                sendAJAX();
+                $(document).on('click', '.renew',function() {
+                    window.location.reload();
+                }); 
+            }
         } else {
             flip.play();
             setTimeout(changeText, 300);

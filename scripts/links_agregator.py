@@ -43,9 +43,12 @@ def get_page(vl):
 
 
 def ez_fz_text_from_html(body):
-    soup = BeautifulSoup(body, 'html.parser')
-    code_with_solution = soup.find("div", {"class": "entry-content"})
-    return str(code_with_solution)
+    try:
+        soup = BeautifulSoup(body, 'html.parser')
+        code_with_solution = soup.find("div", {"class": "entry-content"})
+        return str(code_with_solution)
+    except:
+        pass
 
 
 def znj_text_from_html(body):
@@ -63,19 +66,25 @@ def znj_text_from_html(body):
 
 
 def uf_text_from_html(body):
-    soup = BeautifulSoup(body, 'html.parser')
-    code_with_solution = soup.find("div", {"class": "comment-data"})
-    return str(code_with_solution)
+    try:
+        soup = BeautifulSoup(body, 'html.parser')
+        code_with_solution = soup.find("div", {"class": "comment-data"})
+        return str(code_with_solution)
+    except:
+        pass
 
 
 def omr_text_from_html(body):
-    soup = BeautifulSoup(body, 'html.parser')
-    code_with_solution = soup.select('div.answer > div.atext > a')[0]
-    code_with_solution = re.sub('<a href=([\s\S]*?)>','<p>', str(code_with_solution))
-    code_with_solution = re.sub('</a>', '</p>', code_with_solution)
-    print('omr')
-    print(code_with_solution)
-    return code_with_solution
+    try:
+        soup = BeautifulSoup(body, 'html.parser')
+        code_with_solution = soup.select('div.answer > div.atext > a')[0]
+        code_with_solution = re.sub('<a href=([\s\S]*?)>','<p>', str(code_with_solution))
+        code_with_solution = re.sub('</a>', '</p>', code_with_solution)
+        print('omr')
+        print(code_with_solution)
+        return code_with_solution
+    except:
+        pass
 
 
 def la_main(valid_links_list):

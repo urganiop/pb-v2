@@ -39,6 +39,12 @@ def read_text(image):
     return text
 
 
+def assign_formula():
+    pass
+
+def search_in_bd():
+    pass
+
 def ip_main(image):
     # img = cv2.imread(image)
     img = image

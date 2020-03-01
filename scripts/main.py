@@ -51,7 +51,7 @@ def ip_main(image):
     box = east_detector(img)
     cr = cropped_image(img, box)
 
-    rot, ang = get_rotated_image(cr)
+    ang = get_rotated_image(cr)
     img = image_rotator(img, ang)
 
     text = read_text(img)

@@ -5,8 +5,6 @@ from bs4 import BeautifulSoup
 
 DIR = os.getcwd() + r'\interchange_files'
 SOLUTIONS_PATH = os.getcwd() + r'\solutions_html'
-# with open(DIR + r'\valid_links.json', 'r', encoding='utf-8') as qf:
-#     valid_links_list = load(qf)
 
 
 def link_determin(alink):

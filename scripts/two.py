@@ -13,6 +13,7 @@ import pytesseract
 # print(text)
 
 def image_rotator(image, angle):
+    s = time.time()
     h, w = image.shape[:2]
     center = (w // 2, h//2)
     scale = 1
@@ -20,7 +21,7 @@ def image_rotator(image, angle):
         scale = w/h
     M = cv2.getRotationMatrix2D(center, angle, scale)
     rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-
+    #print(f'rotator {time.time() - s}')
     return rotated
 
 
@@ -34,8 +35,11 @@ def get_rotated_image(image):
     for phi in angles:
         Y1 = []
         image_array_y = image_rotator(image.copy(), phi)
-        for row in image_array_y:
-            Y1.append(1/sum(row))
+        s = time.time()
+        for i, row in enumerate(image_array_y):
+            if i % 8 == 0:
+                Y1.append(1/sum(row))
+        print(f'row counter {time.time() - s}')
         peak = max(Y1)
         if peak > max_peak:
             target_angle = phi
@@ -46,8 +50,9 @@ def get_rotated_image(image):
         for phi in angles:
             Y1 = []
             image_array_y = image_rotator(image.copy(), phi)
-            for row in image_array_y:
-                Y1.append(1/sum(row))
+            for i, row in enumerate(image_array_y):
+                if i % 8 == 0:
+                    Y1.append(1/sum(row))
             peak = max(Y1)
             if peak > max_peak:
                 target_angle = phi
@@ -55,14 +60,15 @@ def get_rotated_image(image):
             peak_arr.append(peak)
     print('[INFO] time to rotate {} to {} degrees '.format(time.time() - start, target_angle))
 
-    rotated_image = image_rotator(image.copy(), target_angle)
+    # rotated_image = image_rotator(image.copy(), target_angle)
     # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
     # res = cv2.morphologyEx(rotated_image, cv2.MORPH_OPEN, kernel)
-    return rotated_image, target_angle
+    return target_angle
 
 
-# image = cv2.imread('imgs/10.jpg')
-# image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-# rot = get_rotated_image(image)
-# cv2.imshow('', rot)
-# cv2.waitKey()
+image = cv2.imread(r'C:\Users\Admin\PycharmProjects\PhysicsBasher\PhysicaBasher.git\img_recognition\ct2.jpg')
+image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+a = get_rotated_image(image)
+rot = image_rotator(image.copy(), a)
+cv2.imshow('', rot)
+cv2.waitKey()

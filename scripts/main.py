@@ -4,9 +4,8 @@ import numpy as np
 from PIL import Image
 import pytesseract
 
-
 from scripts.EAST import east_detector
-from scripts.two import get_rotated_image, image_rotator
+from scripts.rotators import get_rotated_image, image_rotator
 
 '''
     - east detector

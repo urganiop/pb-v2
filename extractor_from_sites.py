@@ -60,7 +60,7 @@ sublinks = ['kinematika/'
 
 mainlink = 'http://easyfizika.ru/zadachi/'
 
-main_parser(mainlink, [sublinks[2]])
+main_parser(mainlink, [sublinks[1]])
 
 
 

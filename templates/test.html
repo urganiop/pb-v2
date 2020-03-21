@@ -9,9 +9,14 @@
 <body>
     <div class="container">
         <div class="item logo"><div>PB</div></div>
+        <div class="attention"><div class="attent-text">! Внимание. Система находится в тестовом режиме - возможны ошибки !</div></div>
         <div class="item changeable start-button"><div id='start' class="start-button-frame"><div>Начать</div></div></div>
         <div class="item renew-holder"></div>
-        <div class="item"></div>
+        <div class="instruction"><div class="instruction-text">
+            1. Нажать начать. <br>
+            2. Сделать или выбрать <br> фото задачи. <br>
+            3. Отправить.
+        </div></div>
         <input type="file" id="file" accept="image/*" />
     </div>
 </body>
@@ -27,6 +32,10 @@
         display: none;
     }
     
+    p {
+        margin: 0px;
+    }
+    
     a,
     a:link,
     a:visited {
@@ -39,14 +48,36 @@
         height: 100%;
         
         display: grid;
-        grid-template-columns: 300px auto auto auto auto auto;
-        grid-template-rows: 300px auto auto auto;
+        grid-template-columns: 20% 60% auto;
+        grid-template-rows: 300px auto auto;
         font-family: 'Exo 2', sans-serif;
     }
     
     .item {
         width: 100%;
         height: 100%;
+    }
+    
+    .instruction {
+        grid-column: 1/2;
+        grid-row: 2/3;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .attention {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .attent-text {
+        font-weight: bold;
     }
     
     .logo {
@@ -64,8 +95,8 @@
         font-weight: bold;
         font-size: 48px;
         
-        grid-column: 3/5;
-        grid-row: 2/4;
+        grid-column: 2/3;
+        grid-row: 2/3;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -80,6 +111,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
     
     .sandWatch {
@@ -89,30 +121,31 @@
     }
     
     .result-answer {
-        grid-column: 3/5;
-        grid-row: 2/3;
+        grid-column: 2/3;
+        grid-row: 2/4;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
+/*        justify-content: space-between;*/
         font-size: 24px;
     }
     
     .question-field {
-        height: 300px;
-        width: 450px;
+/*        height: 300px;*/
+/*        width: 450px;*/
+        margin-bottom: 20px;
     }
     
     .answer-field {
-        height: 300px;
-        width: 450px;
+/*        height: 300px;*/
+/*        width: 450px;*/
     }
     
     .renew-holder {
         display: flex;
         justify-content: center;
-        align-items: center;
-        grid-column: 3/5;
-        grid-row: 3/4;
+        align-items: flex-start;
+        grid-column: 3/4;
+        grid-row: 2/3;
     }
     
     .renew {
@@ -126,6 +159,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
     
 </style>

@@ -1,8 +1,5 @@
 import cv2
 import time
-import numpy as np
-from PIL import Image
-import pytesseract
 
 
 # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -66,9 +63,9 @@ def get_rotated_image(image):
     return target_angle
 
 
-image = cv2.imread(r'C:\Users\Admin\PycharmProjects\PhysicsBasher\PhysicaBasher.git\img_recognition\ct2.jpg')
-image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-a = get_rotated_image(image)
-rot = image_rotator(image.copy(), a)
-cv2.imshow('', rot)
-cv2.waitKey()
+# image = cv2.imread(r'C:\Users\Admin\PycharmProjects\PhysicsBasher\PhysicaBasher.git\img_recognition\ct2.jpg')
+# image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# a = get_rotated_image(image)
+# rot = image_rotator(image.copy(), a)
+# cv2.imshow('', rot)
+# cv2.waitKey()
